@@ -2,7 +2,7 @@
 using System.Data.Entity;
 using System.Data.SQLite;
 
-namespace Model_View_Controller.Repositiries
+namespace Model_View_Controller.Repositories
 {
     public class SqliteConnect
     {

@@ -24,6 +24,6 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-var sqliteConnection = Model_View_Controller.Repositiries.SqliteConnect.CreateConnection();
-Model_View_Controller.Repositiries.Migrations.Run(sqliteConnection);
+Model_View_Controller.Repositories.Migrations.Run();
+Model_View_Controller.Repositories.TopicRepository.AddNewTopic("git");
 app.Run();
