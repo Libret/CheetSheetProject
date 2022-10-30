@@ -518,3 +518,4 @@ $RECYCLE.BIN/
 *.ico
 Model-View-Controller/wwwroot/lib/bootstrap/LICENSE
 Model-View-Controller/wwwroot/lib/jquery-validation/LICENSE.md
+Model-View-Controller/database.db
