@@ -15,7 +15,7 @@ namespace Model_View_Controller.Repositories
         public static List<Topic> GetAllTopics()
         {
             var allTopics = new List<Topic>();
-            var sqlite_datareader = SQLTableManagement.ReadData("Topic");
+            var sqlite_datareader = SQLTableManagement.ReadData("Topic", null);
             while (sqlite_datareader.Read())
             {
                 string id = sqlite_datareader.GetString(0);
@@ -30,5 +30,23 @@ namespace Model_View_Controller.Repositories
             return allTopics;
         }
 
+        public static Topic? GetTopic(string id)
+        {
+            SQLTableManagement.GetSQLiteConnection().Open();
+            string clause = $"id = \"{id}\"";
+            var sqlite_datareader = SQLTableManagement.ReadData("Topic", clause);
+            while (sqlite_datareader.Read())
+            {
+                string name = sqlite_datareader.GetString(1);
+                SQLTableManagement.GetSQLiteConnection().Close();
+                return new Topic
+                {
+                    Id = id,
+                    Name = name
+                };
+            }
+            SQLTableManagement.GetSQLiteConnection().Close();
+            return null;
+        }
     }
 }
