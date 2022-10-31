@@ -24,23 +24,23 @@ namespace Model_View_Controller.Repositories
 
         }
 
-        public static void ReadData(string tableName)
+        public static SQLiteDataReader ReadData(string tableName, string? clause)
         {
-            SQLiteDataReader sqlite_datareader;
-            SQLiteCommand sqlite_cmd;
-            sqlite_cmd = GetSQLiteConnection().CreateCommand();
-            sqlite_cmd.CommandText = $"SELECT * FROM {tableName}";
-
-            sqlite_datareader = sqlite_cmd.ExecuteReader();
-            while (sqlite_datareader.Read())
+            SQLiteCommand sqlite_cmd = GetSQLiteConnection().CreateCommand();
+            if(clause == null)
             {
-                string myreader = sqlite_datareader.GetString(0);
-                Console.WriteLine(myreader);
+                sqlite_cmd.CommandText = $"SELECT * FROM {tableName}";
             }
-            GetSQLiteConnection().Close();
+            else
+            {
+                sqlite_cmd.CommandText = $"SELECT * FROM {tableName} WHERE {clause}";
+
+            }
+            return sqlite_cmd.ExecuteReader();
+            //GetSQLiteConnection().Close();
         }
 
-        private static SQLiteConnection GetSQLiteConnection()
+        public static SQLiteConnection GetSQLiteConnection()
         {
             if (_conn == null)
             {
