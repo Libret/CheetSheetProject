@@ -13,7 +13,7 @@ namespace Model_View_Controller.Repositories
         public static List<CheetSheetItem> GetAllCheetSheetItems()
         {
             var allCheetSheetItems = new List<CheetSheetItem>();
-            var sqlite_datareader = SQLTableManagement.ReadData("CheetSheetItem");
+            var sqlite_datareader = SQLTableManagement.ReadData("CheetSheetItem", null);
             while (sqlite_datareader.Read())
             {
                 string id = sqlite_datareader.GetString(0);

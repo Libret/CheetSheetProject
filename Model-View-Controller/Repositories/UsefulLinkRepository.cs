@@ -13,7 +13,7 @@ namespace Model_View_Controller.Repositories
         public static List<UsefulLink> GetAllTopics()
         {
             var allUsefulLinks = new List<UsefulLink>();
-            var sqlite_datareader = SQLTableManagement.ReadData("UsefulLink");
+            var sqlite_datareader = SQLTableManagement.ReadData("UsefulLink", null);
             while (sqlite_datareader.Read())
             {
                 string id = sqlite_datareader.GetString(0);
