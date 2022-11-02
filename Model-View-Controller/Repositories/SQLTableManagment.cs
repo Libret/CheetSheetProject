@@ -24,6 +24,22 @@ namespace Model_View_Controller.Repositories
 
         }
 
+        public static void UpdateData(string tableName, string setValues, string clause)
+        {
+            SQLiteCommand sqlite_cmd = GetSQLiteConnection().CreateCommand();
+            sqlite_cmd.CommandText = $"UPDATE {tableName} SET {setValues} WHERE {clause}; ";
+            sqlite_cmd.ExecuteNonQuery();
+
+        }
+
+        public static void DeleteData(string tableName, string clause)
+        {
+            SQLiteCommand sqlite_cmd = GetSQLiteConnection().CreateCommand();
+            sqlite_cmd.CommandText = $"DELETE FROM {tableName} WHERE {clause}; ";
+            sqlite_cmd.ExecuteNonQuery();
+
+        }
+
         public static SQLiteDataReader ReadData(string tableName, string? clause)
         {
             SQLiteCommand sqlite_cmd = GetSQLiteConnection().CreateCommand();
@@ -45,6 +61,10 @@ namespace Model_View_Controller.Repositories
             if (_conn == null)
             {
                 _conn = SqliteConnect.CreateConnection();
+            }
+            if(_conn.State == System.Data.ConnectionState.Closed)
+            {
+                _conn.Open();
             }
             return _conn;
         }
