@@ -6,10 +6,10 @@ namespace Model_View_Controller.Repositories
     {
         private static readonly string stringCheetSheetItem = "CheetSheetItem";
 
-        public static void AddNewCheetSheetItem(string cheetSheetItemName, string codeSnippet, string additionalInfo, string topicId)
+        public static void AddNewCheetSheetItem(CheetSheetItem cheetSheetItem, string? topicId)
         {
             var id = Guid.NewGuid();
-            SQLTableManagement.InsertData(stringCheetSheetItem, "Id, Name, CodeSnippet, AdditionalInfo, TopicId", $"\"{id}\", \"{cheetSheetItemName}\", \"{codeSnippet}\", \"{additionalInfo}\", \"{topicId}\"");
+            SQLTableManagement.InsertData(stringCheetSheetItem, "Id, Name, CodeSnippet, AdditionalInfo, TopicId", $"\"{id}\", \"{cheetSheetItem.Name}\", \"{cheetSheetItem.CodeSnippet}\", \"{cheetSheetItem.AdditionalInfo}\", \"{topicId}\"");
         }
 
         public static List<CheetSheetItem> GetAllItems()
@@ -85,10 +85,13 @@ namespace Model_View_Controller.Repositories
         {
             var clause = $"Id = \"{id}\"";
             var setItem = "";
-            setItem += $"Name = \"{cheetSheetItem.Name}\", ";
+            if(cheetSheetItem.Name != null)
+            {
+                setItem += $"Name = \"{cheetSheetItem.Name}\", ";
+            }
             setItem += $"CodeSnippet = \"{cheetSheetItem.CodeSnippet}\", ";
             setItem += $"AdditionalInfo = \"{cheetSheetItem.AdditionalInfo}\"";
-            SQLTableManagement.UpdateData(CheetSheetItemRepository.stringCheetSheetItem, setItem, clause);
+            SQLTableManagement.UpdateData(stringCheetSheetItem, setItem, clause);
         }
 
         public static void DeleteItemById(string id)
