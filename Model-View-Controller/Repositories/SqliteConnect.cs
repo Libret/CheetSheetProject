@@ -21,5 +21,11 @@ namespace Model_View_Controller.Repositories
             }
             return sqlite_conn;
         }
+
+        public static void CoseConnections(SQLiteDataReader sqlite_datareader)
+        {
+            sqlite_datareader.Close();
+            SQLTableManagement.GetSQLiteConnection().Close();
+        }
     }
 }
