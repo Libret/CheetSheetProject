@@ -4,30 +4,106 @@ namespace Model_View_Controller.Repositories
 {
     public class UsefulLinkRepository
     {
-        public static void AddNewUsefulLink(string usefulLinkAdress, int order, string uheetSheetItemId)
+        private static readonly string stringUsefulLink = "UsefulLink";
+
+        public static void AddNewUsefulLink(UsefulLink usefulLink, string? cheetSheetItemId)
         {
             var id = Guid.NewGuid();
-            SQLTableManagement.InsertData("Topic", "Id, LinkAddress, LinkOrder, CheetSheetItemId", $"\"{id}\", \"{usefulLinkAdress}\", \"{order}\", \"{uheetSheetItemId}\"");
+            SQLTableManagement.InsertData(stringUsefulLink, "Id, LinkAddress, LinkOrder, CheetSheetItemId", $"\"{id}\", \"{usefulLink.LinkAddress}\", \"{usefulLink.LinkOrder}\", \"{cheetSheetItemId}\"");
         }
 
-        public static List<UsefulLink> GetAllTopics()
+        public static List<UsefulLink> GetAllLtnks()
         {
             var allUsefulLinks = new List<UsefulLink>();
-            var sqlite_datareader = SQLTableManagement.ReadData("UsefulLink", null);
+            var sqlite_datareader = SQLTableManagement.ReadData(stringUsefulLink, null);
             while (sqlite_datareader.Read())
             {
                 string id = sqlite_datareader.GetString(0);
                 string usefulLinkAdress = sqlite_datareader.GetString(1);
-                string order = sqlite_datareader.GetString(2);
+                int order = sqlite_datareader.GetInt32(2); //(2)
                 allUsefulLinks.Add(new UsefulLink
                 {
                     Id = id,
                     LinkAddress = usefulLinkAdress,
-                    Order = int.Parse(order)
+                    LinkOrder = order
                 });
             }
             SQLTableManagement.GetSQLiteConnection().Close();
             return allUsefulLinks;
+        }
+
+        public static List<UsefulLink> GetAllLinksByItemId(string cheetSheetItemId)
+        {
+            var allUsefulLinksForItem = new List<UsefulLink>();
+            var clause = $"CheetSheetItemId = \"{cheetSheetItemId}\"";
+            var sqlite_datareader = SQLTableManagement.ReadData(stringUsefulLink, clause);
+            while (sqlite_datareader.Read())
+            {
+                string id = sqlite_datareader.GetString(0);
+                string linkAddress = sqlite_datareader.GetString(1);
+                int order = sqlite_datareader.GetInt32(2);
+                string getCheetSheetItemId = sqlite_datareader.GetString(3);
+
+                allUsefulLinksForItem.Add(new UsefulLink
+                {
+                    Id = id,
+                    LinkAddress = linkAddress,
+                    LinkOrder = order,
+                    CheetSheetItemId = getCheetSheetItemId
+                }) ;
+            }
+            SqliteConnect.CoseConnections(sqlite_datareader);
+            return allUsefulLinksForItem;
+        }
+
+        public static UsefulLink? GetCheetLink(string id)
+        {
+            string clause = $"id = \"{id}\"";
+            var sqlite_datareader = SQLTableManagement.ReadData(stringUsefulLink, clause);
+            while (sqlite_datareader.Read())
+            {
+                string linkAddress = sqlite_datareader.GetString(1);
+                int order = sqlite_datareader.GetInt32(2);
+                string cheetSheetItemId = sqlite_datareader.GetString(3);
+                SqliteConnect.CoseConnections(sqlite_datareader);
+                return new UsefulLink
+                {
+                    Id = id,
+                    LinkAddress = linkAddress,
+                    LinkOrder = order,
+                    CheetSheetItemId = cheetSheetItemId
+                };
+            }
+            SqliteConnect.CoseConnections(sqlite_datareader);
+            return null;
+        }
+
+        public static void UpdateLinkById(string id, UsefulLink usefulLink)
+        {
+            var clause = $"Id = \"{id}\"";
+            var setLink = "";
+            if(usefulLink.LinkAddress != null)
+            {
+                setLink += $"LinkAddress = \"{usefulLink.LinkAddress}\", ";
+            }
+            if (usefulLink.CheetSheetItemId != null)
+            {
+                setLink += $"CheetSheetItemID = \"{usefulLink.CheetSheetItemId}\", ";
+            }
+            setLink += $"LinkOrder = {usefulLink.LinkOrder}";
+            SQLTableManagement.UpdateData(stringUsefulLink, setLink, clause);
+        }
+
+        public static void DeleteLinkById(string id)
+        {
+            var clause = $"Id = \"{id}\"";
+            SQLTableManagement.DeleteData(stringUsefulLink, clause);
+        }
+
+        public static void DeleteLinkByUrl(string link)
+        {
+            var clause = $"LinkAddress = \"{link}\"";
+            SQLTableManagement.DeleteData(stringUsefulLink, clause);
         }
     }
 }
