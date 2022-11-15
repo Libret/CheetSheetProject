@@ -9,7 +9,9 @@ namespace Model_View_Controller.Repositories
         public static void AddNewCheetSheetItem(CheetSheetItem cheetSheetItem, string? topicId)
         {
             var id = Guid.NewGuid();
-            SQLTableManagement.InsertData(stringCheetSheetItem, "Id, Name, CodeSnippet, AdditionalInfo, TopicId", $"\"{id}\", \"{cheetSheetItem.Name}\", \"{cheetSheetItem.CodeSnippet}\", \"{cheetSheetItem.AdditionalInfo}\", \"{topicId}\"");
+            SQLTableManagement.InsertData(stringCheetSheetItem, "Id, Name, CodeSnippet, AdditionalInfo", 
+                    $"\"{id}\", \"{cheetSheetItem.Name}\", \"{cheetSheetItem.CodeSnippet}\", \"{cheetSheetItem.AdditionalInfo}\"");
+            
         }
 
         public static List<CheetSheetItem> GetAllItems()
