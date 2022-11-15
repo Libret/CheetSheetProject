@@ -6,6 +6,8 @@ namespace Model_View_Controller.Repositories
 {
     public class SqliteConnect
     {
+        private static SQLiteConnection _conn;
+
         public static SQLiteConnection CreateConnection()
         {
 
@@ -22,10 +24,23 @@ namespace Model_View_Controller.Repositories
             return sqlite_conn;
         }
 
+        public static SQLiteConnection GetSQLiteConnection()
+        {
+            if (_conn == null)
+            {
+                _conn = SqliteConnect.CreateConnection();
+            }
+            if (_conn.State == System.Data.ConnectionState.Closed)
+            {
+                _conn.Open();
+            }
+            return _conn;
+        }
+
         public static void CoseConnections(SQLiteDataReader sqlite_datareader)
         {
             sqlite_datareader.Close();
-            SQLTableManagement.GetSQLiteConnection().Close();
+            GetSQLiteConnection().Close();
         }
     }
 }
