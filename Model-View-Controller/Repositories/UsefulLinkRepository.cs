@@ -28,7 +28,7 @@ namespace Model_View_Controller.Repositories
                     LinkOrder = order
                 });
             }
-            SQLTableManagement.GetSQLiteConnection().Close();
+            SqliteConnect.CoseConnections(sqlite_datareader);
             return allUsefulLinks;
         }
 
