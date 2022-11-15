@@ -6,11 +6,11 @@ namespace Model_View_Controller.Repositories
 {
     public class SQLTableManagement
     {
-        private static SQLiteConnection _conn;
+        
         public static void CreateTable(string Createsql)
         {
 
-            SQLiteCommand sqlite_cmd = GetSQLiteConnection().CreateCommand();
+            SQLiteCommand sqlite_cmd = SqliteConnect.GetSQLiteConnection().CreateCommand();
             sqlite_cmd.CommandText = Createsql;
             sqlite_cmd.ExecuteNonQuery();
 
@@ -18,7 +18,7 @@ namespace Model_View_Controller.Repositories
 
         public static void InsertData(string tableName, string columnNames, string values)
         {
-            SQLiteCommand sqlite_cmd = GetSQLiteConnection().CreateCommand();
+            SQLiteCommand sqlite_cmd = SqliteConnect.GetSQLiteConnection().CreateCommand();
             sqlite_cmd.CommandText = $"INSERT INTO {tableName} ({columnNames}) VALUES({values}); ";
             sqlite_cmd.ExecuteNonQuery();
 
@@ -26,7 +26,7 @@ namespace Model_View_Controller.Repositories
 
         public static void UpdateData(string tableName, string setValues, string clause)
         {
-            SQLiteCommand sqlite_cmd = GetSQLiteConnection().CreateCommand();
+            SQLiteCommand sqlite_cmd = SqliteConnect.GetSQLiteConnection().CreateCommand();
             sqlite_cmd.CommandText = $"UPDATE {tableName} SET {setValues} WHERE {clause}; ";
             sqlite_cmd.ExecuteNonQuery();
 
@@ -34,7 +34,7 @@ namespace Model_View_Controller.Repositories
 
         public static void DeleteData(string tableName, string clause)
         {
-            SQLiteCommand sqlite_cmd = GetSQLiteConnection().CreateCommand();
+            SQLiteCommand sqlite_cmd = SqliteConnect.GetSQLiteConnection().CreateCommand();
             sqlite_cmd.CommandText = $"DELETE FROM {tableName} WHERE {clause}; ";
             sqlite_cmd.ExecuteNonQuery();
 
@@ -42,7 +42,7 @@ namespace Model_View_Controller.Repositories
 
         public static SQLiteDataReader ReadData(string tableName, string? clause)
         {
-            SQLiteCommand sqlite_cmd = GetSQLiteConnection().CreateCommand();
+            SQLiteCommand sqlite_cmd = SqliteConnect.GetSQLiteConnection().CreateCommand();
             if(clause == null)
             {
                 sqlite_cmd.CommandText = $"SELECT * FROM {tableName}";
@@ -56,17 +56,11 @@ namespace Model_View_Controller.Repositories
             //GetSQLiteConnection().Close();
         }
 
-        public static SQLiteConnection GetSQLiteConnection()
+        public static SQLiteDataReader ReadCustomData(string customSelectStatement)
         {
-            if (_conn == null)
-            {
-                _conn = SqliteConnect.CreateConnection();
-            }
-            if(_conn.State == System.Data.ConnectionState.Closed)
-            {
-                _conn.Open();
-            }
-            return _conn;
+            SQLiteCommand sqliteCommand = SqliteConnect.GetSQLiteConnection().CreateCommand();
+            sqliteCommand.CommandText = customSelectStatement;
+            return sqliteCommand.ExecuteReader();
         }
 
     }
