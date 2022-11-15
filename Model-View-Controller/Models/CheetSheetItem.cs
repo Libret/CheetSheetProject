@@ -10,6 +10,11 @@
 
         public string AdditionalInfo { get; set; }
 
-        public List<UsefulLink> usefulLinks { get; set; }
+        public List<UsefulLink> UsefulLinks { get; set; }
+
+        public CheetSheetItem()
+        {
+            UsefulLinks = new List<UsefulLink>();
+        }
     }
 }

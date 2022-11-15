@@ -6,6 +6,11 @@
 
         public string Name { get; set; }
 
-        public List<CheetSheetItem> cheetSheetItems { get; set; }
+        public List<CheetSheetItem> CheetSheetItems { get; set; }
+
+        public Topic()
+        {
+            CheetSheetItems = new List<CheetSheetItem>();
+        }
     }
 }
