@@ -29,8 +29,6 @@ app.MapControllerRoute(
 //Model_View_Controller.Repositories.Migrations.Run();
 /*
 
-
-
 var allItemsForTopic = Model_View_Controller.Repositories.TopicRepository.GetTopicWithAllItems("a8c4f9ac-9092-4e20-864c-1001bc31d5d1");
 
 
@@ -44,7 +42,7 @@ var newItem = new CheetSheetItem
 };
 
 Model_View_Controller.Repositories.CheetSheetItemRepository.AddNewCheetSheetItem(newItem, "a8c4f9ac-9092-4e20-864c-1001bc31d5d1");
-*/
+
 var firstUsefulLink = new UsefulLink
 {
     LinkAddress = "https://training.github.com/downloads/github-git-cheat-sheet/",
@@ -58,5 +56,13 @@ var secondUsefulLink = new UsefulLink
     LinkOrder = 0
 };
 Model_View_Controller.Repositories.UsefulLinkRepository.AddNewUsefulLink(secondUsefulLink, "7e052580-0ad1-4b66-b0ce-9fc62136c642");
+*/
+var secondUsefulLink = new UsefulLink
+{
+    LinkAddress = "https://learngitbranching.js.org/",
+    LinkOrder = 0
+};
+Model_View_Controller.Repositories.UsefulLinkRepository.AddNewUsefulLink(secondUsefulLink, "78a16b68-5241-49b0-af81-83e1893a8985");
+
 
 app.Run();

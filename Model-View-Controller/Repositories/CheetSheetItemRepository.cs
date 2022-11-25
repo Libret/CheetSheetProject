@@ -6,11 +6,13 @@ namespace Model_View_Controller.Repositories
     {
         private static readonly string stringCheetSheetItem = "CheetSheetItem";
 
-        public static void AddNewCheetSheetItem(CheetSheetItem cheetSheetItem, string? topicId)
+        public static void AddNewCheetSheetItem(CheetSheetItem cheetSheetItem, string topicId)
         {
             var id = Guid.NewGuid();
-            SQLTableManagement.InsertData(stringCheetSheetItem, "Id, Name, CodeSnippet, AdditionalInfo", 
-                    $"\"{id}\", \"{cheetSheetItem.Name}\", \"{cheetSheetItem.CodeSnippet}\", \"{cheetSheetItem.AdditionalInfo}\"");
+            var columnNames = "Id, Name, CodeSnippet, AdditionalInfo, TopicId";
+            var columnValues = $"\"{id}\", \"{cheetSheetItem.Name}\", \"{cheetSheetItem.CodeSnippet}\", \"{cheetSheetItem.AdditionalInfo}\", \"{topicId}\"";
+
+            SQLTableManagement.InsertData(stringCheetSheetItem, columnNames, columnValues);
             
         }
 

@@ -20,7 +20,7 @@ namespace Model_View_Controller.Repositories
             {
                 string id = sqlite_datareader.GetString(0);
                 string usefulLinkAdress = sqlite_datareader.GetString(1);
-                int order = sqlite_datareader.GetInt32(2); //(2)
+                int order = sqlite_datareader.GetInt32(2);
                 allUsefulLinks.Add(new UsefulLink
                 {
                     Id = id,
