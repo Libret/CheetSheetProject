@@ -508,14 +508,5 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,aspnetcore,vs
-*.js
-*.map
-*.txt
-*.css
-*.json
-*.csproj
-*.cshtml
-*.ico
-Model-View-Controller/wwwroot/lib/bootstrap/LICENSE
-Model-View-Controller/wwwroot/lib/jquery-validation/LICENSE.md
-Model-View-Controller/database.db
+
+
