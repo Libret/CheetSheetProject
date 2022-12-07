@@ -2,11 +2,11 @@
 
 namespace Model_View_Controller.Repositories
 {
-    public class CheetSheetItemRepository
+    public class CheatSheetItemRepository
     {
         private static readonly string stringCheetSheetItem = "CheetSheetItem";
 
-        public static void AddNewCheetSheetItem(CheetSheetItem cheetSheetItem, string topicId)
+        public static void AddNewCheetSheetItem(CheatSheetItem cheetSheetItem, string topicId)
         {
             var id = Guid.NewGuid();
             var columnNames = "Id, Name, CodeSnippet, AdditionalInfo, TopicId";
@@ -16,9 +16,9 @@ namespace Model_View_Controller.Repositories
             
         }
 
-        public static List<CheetSheetItem> GetAllItems()
+        public static List<CheatSheetItem> GetAllItems()
         {
-            var allCheetSheetItems = new List<CheetSheetItem>();
+            var allCheetSheetItems = new List<CheatSheetItem>();
             var sqlite_datareader = SQLTableManagement.ReadData(stringCheetSheetItem, null);
             while (sqlite_datareader.Read())
             {
@@ -27,7 +27,7 @@ namespace Model_View_Controller.Repositories
                 string codeSnippet = sqlite_datareader.GetString(2);
                 string additionalInfo = sqlite_datareader.GetString(3);
                 string topicId = sqlite_datareader.GetString(4);
-                allCheetSheetItems.Add(new CheetSheetItem
+                allCheetSheetItems.Add(new CheatSheetItem
                 {
                     Id = id,
                     Name = name,
@@ -39,9 +39,9 @@ namespace Model_View_Controller.Repositories
             return allCheetSheetItems;
         }
 
-        public static List<CheetSheetItem> GetAllItemsByTopicId(string topicId)
+        public static List<CheatSheetItem> GetAllItemsByTopicId(string topicId)
         {
-            var allCheetSheetItemsForTopic = new List<CheetSheetItem>();
+            var allCheetSheetItemsForTopic = new List<CheatSheetItem>();
             var clause = $"TopicId = \"{topicId}\"";
             var sqlite_datareader = SQLTableManagement.ReadData(stringCheetSheetItem, clause);
             while (sqlite_datareader.Read())
@@ -51,7 +51,7 @@ namespace Model_View_Controller.Repositories
                 string codeSnippet = sqlite_datareader.GetString(2);
                 string additionalInfo = sqlite_datareader.GetString(3);
                 
-                allCheetSheetItemsForTopic.Add(new CheetSheetItem
+                allCheetSheetItemsForTopic.Add(new CheatSheetItem
                 {
                     Id = id,
                     Name = name,
@@ -63,7 +63,7 @@ namespace Model_View_Controller.Repositories
             return allCheetSheetItemsForTopic;
         }
 
-        public static CheetSheetItem? GetCheetSheetItem(string id)
+        public static CheatSheetItem? GetCheetSheetItem(string id)
         {
             string clause = $"id = \"{id}\"";
             var sqlite_datareader = SQLTableManagement.ReadData(stringCheetSheetItem, clause);
@@ -73,7 +73,7 @@ namespace Model_View_Controller.Repositories
                 string codeSnippet = sqlite_datareader.GetString(2);
                 string additionalInfo = sqlite_datareader.GetString(3);
                 SqliteConnect.CoseConnections(sqlite_datareader);
-                return new CheetSheetItem
+                return new CheatSheetItem
                 {
                     Id = id,
                     Name = name,
@@ -85,7 +85,7 @@ namespace Model_View_Controller.Repositories
             return null;
         }
 
-        public static void UpdateItemById(string id, CheetSheetItem cheetSheetItem)
+        public static void UpdateItemById(string id, CheatSheetItem cheetSheetItem)
         {
             var clause = $"Id = \"{id}\"";
             var setItem = "";

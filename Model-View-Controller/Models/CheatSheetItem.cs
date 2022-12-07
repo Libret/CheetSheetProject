@@ -1,6 +1,6 @@
 ﻿namespace Model_View_Controller.Models
 {
-    public class CheetSheetItem
+    public class CheatSheetItem
     {
         public string Id { get; set; }
 
@@ -12,7 +12,7 @@
 
         public List<UsefulLink> UsefulLinks { get; set; }
 
-        public CheetSheetItem()
+        public CheatSheetItem()
         {
             UsefulLinks = new List<UsefulLink>();
         }

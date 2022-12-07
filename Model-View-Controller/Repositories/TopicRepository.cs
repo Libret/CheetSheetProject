@@ -63,7 +63,7 @@ namespace Model_View_Controller.Repositories
                 $"WHERE Topic.Id = \"{topicIdForSelect}\";";
             SQLiteDataReader sqlite_datareader = SQLTableManagement.ReadCustomData(statement);
             Topic topic = null;
-            var cheatSheetItems = new LinkedList<CheetSheetItem>();
+            var cheatSheetItems = new LinkedList<CheatSheetItem>();
 
             while (sqlite_datareader.Read())
             {
@@ -79,7 +79,7 @@ namespace Model_View_Controller.Repositories
                     };
                 }
 
-                CheetSheetItem item = null;
+                CheatSheetItem item = null;
                 if (sqlite_datareader[2] != DBNull.Value)
                 {
                     var itemId = sqlite_datareader.GetString(2);
@@ -93,7 +93,7 @@ namespace Model_View_Controller.Repositories
                         var codeSnippet = sqlite_datareader.GetString(4);
                         var additionalInfo = sqlite_datareader.GetString(5);
 
-                        item = new CheetSheetItem
+                        item = new CheatSheetItem
                         {
                             Id = itemId,
                             Name = itemName,
