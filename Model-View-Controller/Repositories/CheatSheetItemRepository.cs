@@ -6,7 +6,7 @@ namespace Model_View_Controller.Repositories
     {
         private static readonly string stringCheetSheetItem = "CheetSheetItem";
 
-        public static void AddNewCheetSheetItem(CheatSheetItem cheetSheetItem, string topicId)
+        public static void AddNewCheetSheetItem(CheatSheetItem cheetSheetItem, string? topicId)
         {
             var id = Guid.NewGuid();
             var columnNames = "Id, Name, CodeSnippet, AdditionalInfo, TopicId";
