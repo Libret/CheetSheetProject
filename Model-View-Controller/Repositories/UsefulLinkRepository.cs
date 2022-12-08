@@ -42,14 +42,12 @@ namespace Model_View_Controller.Repositories
                 string id = sqlite_datareader.GetString(0);
                 string linkAddress = sqlite_datareader.GetString(1);
                 int order = sqlite_datareader.GetInt32(2);
-                string getCheetSheetItemId = sqlite_datareader.GetString(3);
 
                 allUsefulLinksForItem.Add(new UsefulLink
                 {
                     Id = id,
                     LinkAddress = linkAddress,
                     LinkOrder = order,
-                    CheetSheetItemId = getCheetSheetItemId
                 }) ;
             }
             SqliteConnect.CoseConnections(sqlite_datareader);
@@ -64,14 +62,12 @@ namespace Model_View_Controller.Repositories
             {
                 string linkAddress = sqlite_datareader.GetString(1);
                 int order = sqlite_datareader.GetInt32(2);
-                string cheetSheetItemId = sqlite_datareader.GetString(3);
                 SqliteConnect.CoseConnections(sqlite_datareader);
                 return new UsefulLink
                 {
                     Id = id,
                     LinkAddress = linkAddress,
-                    LinkOrder = order,
-                    CheetSheetItemId = cheetSheetItemId
+                    LinkOrder = order
                 };
             }
             SqliteConnect.CoseConnections(sqlite_datareader);
@@ -86,11 +82,7 @@ namespace Model_View_Controller.Repositories
             {
                 setLink += $"LinkAddress = \"{usefulLink.LinkAddress}\", ";
             }
-            if (usefulLink.CheetSheetItemId != null)
-            {
-                setLink += $"CheetSheetItemID = \"{usefulLink.CheetSheetItemId}\", ";
-            }
-            setLink += $"LinkOrder = {usefulLink.LinkOrder}";
+            setLink += $"LinkOrder = \"{usefulLink.LinkOrder}\"";
             SQLTableManagement.UpdateData(stringUsefulLink, setLink, clause);
         }
 

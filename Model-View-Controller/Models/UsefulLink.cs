@@ -7,9 +7,5 @@
         public string LinkAddress { get; set; }
 
         public int? LinkOrder { get; set; }
-
-        public string CheetSheetItemId { get; set; }
-
-
     }
 }
