@@ -18,10 +18,10 @@ namespace Model_View_Controller.Controllers
             return TopicRepository.GetAllTopics();
         }
 
-        [HttpGet("{topicId}")]
-        public Topic? GetDitaledTopicData(string topicId)
+        [HttpGet("{id}")]
+        public Topic? GetDitaledTopicData(string id)
         {
-            return TopicRepository.GetTopicWithAllItems(topicId);
+            return TopicRepository.GetTopicWithAllItems(id);
         }
 
         [HttpPost]
