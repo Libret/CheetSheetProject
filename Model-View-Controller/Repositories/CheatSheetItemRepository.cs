@@ -1,4 +1,5 @@
 ﻿using Model_View_Controller.Models;
+using System.Data.SQLite;
 
 namespace Model_View_Controller.Repositories
 {
@@ -83,6 +84,58 @@ namespace Model_View_Controller.Repositories
             }
             SqliteConnect.CoseConnections(sqlite_datareader);
             return null;
+        }
+
+        public static CheatSheetItem? GetItemWithAllLinks(string itemIdForSelect)
+        {
+            var statement = "SELECT CheetSheetItem.Id AS ItemId, CheetSheetItem.Name, " +
+                "CheetSheetItem.CodeSnippet, CheetSheetItem.AdditionalInfo, " +
+                "UsefulLink.Id As ItemId, UsefulLink.LinkAddress, UsefulLink.LinkOrder\r\n" +
+                "FROM CheetSheetItem\r\n" +
+                "LEFT JOIN UsefulLink ON CheetSheetItem.Id = UsefulLink.CheetSheetItemId\r\n" +
+                $"WHERE CheetSheetItem.Id = \"{itemIdForSelect}\";";
+            SQLiteDataReader sqlite_datareader = SQLTableManagement.ReadCustomData(statement);
+            CheatSheetItem item = null;
+
+            while (sqlite_datareader.Read())
+            {
+                var itemId = sqlite_datareader.GetString(0);
+
+                if (item == null)
+                {
+                    var itemName = sqlite_datareader.GetString(1);
+                    string codeSnippet = null;
+                    if (sqlite_datareader[2] != DBNull.Value) 
+                    { codeSnippet = sqlite_datareader.GetString(2); }
+                    string additionalInfo = null;
+                    if (sqlite_datareader[3] != DBNull.Value)
+                    { additionalInfo = sqlite_datareader.GetString(3); }
+
+                    item = new CheatSheetItem
+                    {
+                        Id = itemId,
+                        Name = itemName,
+                        CodeSnippet = codeSnippet,
+                        AdditionalInfo = additionalInfo
+                    };
+                }
+
+                UsefulLink link = null;
+                if (sqlite_datareader[4] != DBNull.Value)
+                {
+                    var linkId = sqlite_datareader.GetString(4);
+                    var linkAddress = sqlite_datareader.GetString(5);
+                    var linkOrder = sqlite_datareader.GetInt32(6);
+                    link = new UsefulLink
+                    {
+                        Id = linkId,
+                        LinkAddress = linkAddress,
+                        LinkOrder = linkOrder
+                    };
+                    item.UsefulLinks.Add(link);
+                }
+            }
+            return item;
         }
 
         public static void UpdateItemById(string id, CheatSheetItem cheetSheetItem)
