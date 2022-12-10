@@ -9,12 +9,12 @@ namespace Model_View_Controller.Repositories
 
         public static void AddNewCheetSheetItem(CheatSheetItem cheetSheetItem, string? topicId)
         {
-            var id = Guid.NewGuid();
+            if(cheetSheetItem.Id == null) { cheetSheetItem.Id = Guid.NewGuid().ToString(); }
+            
             var columnNames = "Id, Name, CodeSnippet, AdditionalInfo, TopicId";
-            var columnValues = $"\"{id}\", \"{cheetSheetItem.Name}\", \"{cheetSheetItem.CodeSnippet}\", \"{cheetSheetItem.AdditionalInfo}\", \"{topicId}\"";
+            var columnValues = $"\"{cheetSheetItem.Id}\", \"{cheetSheetItem.Name}\", \"{cheetSheetItem.CodeSnippet}\", \"{cheetSheetItem.AdditionalInfo}\", \"{topicId}\"";
 
             SQLTableManagement.InsertData(stringCheetSheetItem, columnNames, columnValues);
-            
         }
 
         public static List<CheatSheetItem> GetAllItems()
