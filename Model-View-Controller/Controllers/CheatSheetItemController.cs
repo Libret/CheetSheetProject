@@ -21,7 +21,7 @@ namespace Model_View_Controller.Controllers
         [HttpGet("{id}")]
         public CheatSheetItem? GetCheatSheetItem(string id)
         {
-            return CheatSheetItemRepository.GetCheetSheetItem(id);
+            return CheatSheetItemRepository.GetItemWithAllLinks(id);
         }
 
         [HttpGet("topics/{topicId}")]
@@ -34,6 +34,13 @@ namespace Model_View_Controller.Controllers
         public void CreateNewItem([FromBody] CheatSheetItem item, [FromQuery] string? topicId)
         {
             CheatSheetItemRepository.AddNewCheetSheetItem(item, topicId);
+            if(item.UsefulLinks != null)
+            {
+                foreach(UsefulLink link in item.UsefulLinks)
+                { 
+                    UsefulLinkRepository.AddNewUsefulLink(link, item.Id); 
+                }
+            }
         }
         
         [HttpPut("{id}")]
