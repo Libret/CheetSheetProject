@@ -97,5 +97,11 @@ namespace Model_View_Controller.Repositories
             var clause = $"LinkAddress = \"{link}\"";
             SQLTableManagement.DeleteData(stringUsefulLink, clause);
         }
+
+        public static void DeleteLinkByItemId(string cheetSheetItemId)
+        {
+            var clause = $"CheetSheetItemId = \"{cheetSheetItemId}\"";
+            SQLTableManagement.DeleteData(stringUsefulLink, clause);
+        }
     }
 }

@@ -43,6 +43,12 @@ namespace Model_View_Controller.Controllers
                 }
             }
         }
+
+        [HttpPost("links")]
+        public void CreateNewLink([FromBody] UsefulLink link, [FromQuery] string itemId)
+        {
+            UsefulLinkRepository.AddNewUsefulLink(link, itemId);
+        }
         
         [HttpPut("{id}")]
         public CheatSheetItem? UpdateItem(string id, [FromBody] CheatSheetItem item)
@@ -54,6 +60,13 @@ namespace Model_View_Controller.Controllers
         [HttpDelete("{id}")]
         public void DeleteItemById(string id)
         {
+            CheatSheetItemRepository.DeleteItemById(id);
+        }
+
+        [HttpDelete("links/{id}")]
+        public void DeleteItemWithLinksById(string id)
+        {
+            UsefulLinkRepository.DeleteLinkByItemId(id);
             CheatSheetItemRepository.DeleteItemById(id);
         }
     }
