@@ -33,7 +33,6 @@ namespace Model_View_Controller.Controllers
         [HttpPost]
         public void CreateNewItem([FromBody] CheatSheetItem item, [FromQuery] string? topicId)
         {
-            item.Id = Guid.NewGuid().ToString();
             CheatSheetItemRepository.AddNewCheetSheetItem(item, topicId);
             if(item.UsefulLinks != null)
             {
